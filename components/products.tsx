@@ -4,55 +4,50 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { MessageCircle, ArrowRight, Fish, Snowflake, ChefHat, ShoppingBag } from "lucide-react"
 
-interface ProductsProps {
-  images: {
-    pescados: string
-    congelados: string
-    cocina: string
-    almacen: string
-  }
-}
-
 const categoryMeta = [
   {
-    key: "pescados" as const,
+    key: "pescados",
     icon: <Fish className="w-8 h-8 text-white" />,
     href: "/productos/pescados",
     title: "Pescados y Mariscos",
     description:
       "Pescados enteros y filets, mariscos frescos, langostinos, calamar, rabas y combos. Recibimos mercadería del mar y de río todos los días.",
     whatsapp: "Hola, quiero consultar sobre los pescados y mariscos disponibles",
+    image: "/images/categorias/PescadosyMariscos.webp",
   },
   {
-    key: "congelados" as const,
+    key: "congelados",
     icon: <Snowflake className="w-8 h-8 text-white" />,
     href: "/productos/congelados",
     title: "Congelados",
     description:
       "Medallones y filetes de merluza y pollo, bocaditos, croquetas, nuggets y verduras congeladas de marcas como Artico, Grangys y Solimelo.",
     whatsapp: "Hola, quiero consultar sobre los productos congelados disponibles",
+    image: "/images/categorias/Congelados.webp",
   },
   {
-    key: "cocina" as const,
+    key: "cocina",
     icon: <ChefHat className="w-8 h-8 text-white" />,
     href: "/productos/cocina",
     title: "Rotisería",
     description:
       "Sushi y rolls, empanadas de pescado, paella, tartas, ensaladas y platos con guarnición elaborados artesanalmente con pescado fresco.",
     whatsapp: "Hola, quiero consultar sobre los platos de rotisería disponibles",
+    image: "/images/categorias/Rotiseria.webp",
   },
   {
-    key: "almacen" as const,
+    key: "almacen",
     icon: <ShoppingBag className="w-8 h-8 text-white" />,
     href: "/productos/almacen",
     title: "Almacén",
     description:
       "Salsas orientales, aceites de oliva, arroces especiales, conservas de mar, especias, ingredientes para sushi, vinos y quesos.",
     whatsapp: "Hola, quiero consultar sobre los productos del almacén",
+    image: "/images/categorias/Almacen.webp",
   },
 ]
 
-export function Products({ images }: ProductsProps) {
+export function Products() {
   return (
     <div>
       {/* Header */}
@@ -76,7 +71,7 @@ export function Products({ images }: ProductsProps) {
                 key={cat.key}
                 className="group relative rounded-xl overflow-hidden border border-border hover:border-accent/50 transition-colors h-72"
                 style={{
-                  backgroundImage: `url('${images[cat.key]}')`,
+                  backgroundImage: `url('${cat.image}')`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useCallback, memo } from "react"
 import type { ReactNode } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
@@ -14,6 +14,7 @@ interface CategoryTabsProps {
   whatsappPrefix?: string
   icon?: ReactNode
   image?: string
+  productImages?: Record<string, string>
 }
 
 export function CategoryTabs({
@@ -23,8 +24,14 @@ export function CategoryTabs({
   whatsappPrefix = "Hola, quiero consultar disponibilidad de:",
   icon,
   image,
+  productImages,
 }: CategoryTabsProps) {
   const [activeTab, setActiveTab] = useState(subcategories[0]?.id ?? "")
+
+  const handleTabClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    const id = e.currentTarget.dataset.id
+    if (id) setActiveTab(id)
+  }, [])
 
   const activeSubcategory = subcategories.find((s) => s.id === activeTab)
 
@@ -54,7 +61,8 @@ export function CategoryTabs({
             {subcategories.map((sub) => (
               <button
                 key={sub.id}
-                onClick={() => setActiveTab(sub.id)}
+                data-id={sub.id}
+                onClick={handleTabClick}
                 className={`whitespace-nowrap px-4 py-2 rounded text-sm font-medium transition-colors ${
                   activeTab === sub.id
                     ? "bg-accent text-accent-foreground"
@@ -76,7 +84,12 @@ export function CategoryTabs({
             <h2 className="text-xl font-semibold text-foreground mb-6">{activeSubcategory.label}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {activeSubcategory.products.map((product) => (
-                <ProductCard key={product.id} product={product} whatsappPrefix={whatsappPrefix} />
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  whatsappPrefix={whatsappPrefix}
+                  productImages={productImages}
+                />
               ))}
             </div>
           </div>
@@ -98,12 +111,22 @@ export function CategoryTabs({
   )
 }
 
-function ProductCard({ product, whatsappPrefix }: { product: Product; whatsappPrefix: string }) {
+const ProductCard = memo(function ProductCard({
+  product,
+  whatsappPrefix,
+  productImages,
+}: {
+  product: Product
+  whatsappPrefix: string
+  productImages?: Record<string, string>
+}) {
+  const imageSrc = productImages?.[product.id] ?? "/placeholder.svg"
+
   return (
     <article className="group bg-card border border-border rounded-lg overflow-hidden hover:border-accent/50 transition-colors flex flex-col">
       <div className="relative w-full aspect-square bg-muted">
         <Image
-          src="/placeholder.svg"
+          src={imageSrc}
           alt={product.name}
           fill
           className="object-cover"
@@ -136,4 +159,4 @@ function ProductCard({ product, whatsappPrefix }: { product: Product; whatsappPr
       </div>
     </article>
   )
-}
+})

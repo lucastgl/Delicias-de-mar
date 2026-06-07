@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { Fish } from "lucide-react"
 import { CategoryTabs } from "@/components/category-tabs"
 import { pescadosFrescos, pescadosCombos } from "@/lib/products"
-import { getSiteImages, IMAGE_KEYS } from "@/lib/sanity"
+import { getProductImages } from "@/lib/sanity"
 
 export const metadata: Metadata = {
   title: "Pescados Frescos | Delicias de Mar",
@@ -15,7 +15,7 @@ const subcategories = [
 ]
 
 export default async function PescadosFrescosPage() {
-  const images = await getSiteImages()
+  const productImages = await getProductImages()
 
   return (
     <CategoryTabs
@@ -24,7 +24,8 @@ export default async function PescadosFrescosPage() {
       subcategories={subcategories}
       whatsappPrefix="Hola, quiero consultar disponibilidad de:"
       icon={<Fish className="w-12 h-12 text-white" />}
-      image={images[IMAGE_KEYS.SUBCATEGORIA_FRESCOS]}
+      image="/images/banners/subbanners/PrescadosFrescos.webp"
+      productImages={productImages}
     />
   )
 }

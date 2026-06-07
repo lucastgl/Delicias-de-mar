@@ -2,7 +2,6 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Fish, Waves, ArrowRight, MessageCircle } from "lucide-react"
-import { getSiteImages, IMAGE_KEYS } from "@/lib/sanity"
 import { categoryTree } from "@/lib/products"
 
 export const metadata: Metadata = {
@@ -10,39 +9,37 @@ export const metadata: Metadata = {
   description: "Pescados frescos de río y mar, mariscos, filetes y más. Recibimos mercadería fresca todos los días.",
 }
 
-export default async function PescadosPage() {
-  const images = await getSiteImages()
+const subcategories = [
+  {
+    id: "frescos",
+    icon: <Fish className="w-10 h-10 text-white" />,
+    href: "/productos/pescados/frescos",
+    title: "Pescados Frescos",
+    description: "Pescados enteros, filets, despinados y combos. Recibimos todos los días directamente del puerto.",
+    count: categoryTree.pescados.subcategories.find((s) => s.id === "frescos")?.products.length ?? 0,
+    whatsapp: "Hola, quiero consultar disponibilidad de pescados frescos",
+    image: "/images/banners/subbanners/PrescadosFrescos.webp",
+  },
+  {
+    id: "mariscos",
+    icon: <Waves className="w-10 h-10 text-white" />,
+    href: "/productos/pescados/mariscos",
+    title: "Mariscos",
+    description: "Pulpo, rabas, tubo calamar, kanikama y más. Por kilo o por bandeja.",
+    count: categoryTree.pescados.subcategories.find((s) => s.id === "mariscos")?.products.length ?? 0,
+    whatsapp: "Hola, quiero consultar disponibilidad de mariscos",
+    image: "/images/banners/subbanners/Mariscos.webp",
+  },
+]
 
-  const subcategories = [
-    {
-      id: "frescos",
-      icon: <Fish className="w-10 h-10 text-white" />,
-      href: "/productos/pescados/frescos",
-      title: "Pescados Frescos",
-      description: "Pescados enteros, filets, despinados y combos. Recibimos todos los días directamente del puerto.",
-      count: categoryTree.pescados.subcategories.find((s) => s.id === "frescos")?.products.length ?? 0,
-      whatsapp: "Hola, quiero consultar disponibilidad de pescados frescos",
-      image: images[IMAGE_KEYS.SUBCATEGORIA_FRESCOS],
-    },
-    {
-      id: "mariscos",
-      icon: <Waves className="w-10 h-10 text-white" />,
-      href: "/productos/pescados/mariscos",
-      title: "Mariscos",
-      description: "Pulpo, rabas, tubo calamar, kanikama y más. Por kilo o por bandeja.",
-      count: categoryTree.pescados.subcategories.find((s) => s.id === "mariscos")?.products.length ?? 0,
-      whatsapp: "Hola, quiero consultar disponibilidad de mariscos",
-      image: images[IMAGE_KEYS.SUBCATEGORIA_MARISCOS],
-    },
-  ]
-
+export default function PescadosPage() {
   return (
     <div className="pt-16">
       {/* Header */}
       <section
         className="relative py-16 md:py-20"
         style={{
-          backgroundImage: `url('${images[IMAGE_KEYS.CATEGORIA_PESCADOS]}')`,
+          backgroundImage: `url('/images/categorias/PescadosyMariscos.webp')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}

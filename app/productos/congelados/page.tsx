@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { Snowflake } from "lucide-react"
 import { CategoryTabs } from "@/components/category-tabs"
 import { categoryTree } from "@/lib/products"
-import { getSiteImages, IMAGE_KEYS } from "@/lib/sanity"
+import { getProductImages } from "@/lib/sanity"
 
 export const metadata: Metadata = {
   title: "Congelados | Delicias de Mar",
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 }
 
 export default async function CongeladosPage() {
-  const images = await getSiteImages()
+  const productImages = await getProductImages()
 
   return (
     <CategoryTabs
@@ -19,7 +19,8 @@ export default async function CongeladosPage() {
       subcategories={categoryTree.congelados.subcategories}
       whatsappPrefix="Hola, quiero consultar por el producto congelado:"
       icon={<Snowflake className="w-12 h-12 text-white" />}
-      image={images[IMAGE_KEYS.CATEGORIA_CONGELADOS]}
+      image="/images/categorias/Congelados.webp"
+      productImages={productImages}
     />
   )
 }
